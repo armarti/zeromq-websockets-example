@@ -1,0 +1,71 @@
+<!--
+This file has been modified from its original. The original
+is available at https://github.com/zeromq/JSMQ.
+
+This Source Code Form is subject to the
+terms of the Mozilla Public License, v.
+2.0. If a copy of the MPL was not
+distributed with this file, You can
+obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<html>
+    <script src="JSMQ.js"></script>
+    <script crossorigin src="https://unpkg.com/@msgpack/msgpack"></script>
+    <script>
+        const dealer = new JSMQ.Dealer();
+        dealer.connect('ws://localhost:8000/');
+
+        // we must wait for the dealer to be connected before we can send
+        // messages, any messages we are trying to send
+        // while the dealer is not connected will be dropped
+        dealer.sendReady = () => {
+            document.getElementById('sendButton').disabled = '';
+        };
+
+        // const subscriber = new JSMQ.Subscriber();
+        // subscriber.connect('ws://localhost::8000/');
+        // subscriber.subscribe('chat');
+        // subscriber.onMessage = message => {
+        //     // we ignore the first frame because it's topic
+        //     message.popString();
+        //     document.getElementById('chatTextArea').value =
+        //         document.getElementById('chatTextArea').value +
+        //         message.popString() + '\n';
+        // };
+
+        dealer.onMessage = message => {
+            // the response from the server
+            // alert(message.popString());
+            const msgBin = message.popBuffer();
+            const msgObj = MessagePack.decode(msgBin);
+            const chatTextArea = document.getElementById('chatTextArea');
+            chatTextArea.textContent = chatTextArea.textContent + '\n' + msgObj.message;
+            document.getElementById('messageTextBox').value = msgObj.message;
+        };
+
+        function send() {
+            const message = new JSMQ.Message();
+            const msgBin = MessagePack.encode({
+                message: parseInt(document.getElementById('messageTextBox').value)
+            });
+            message.addBuffer(msgBin);
+            dealer.send(message);
+        }
+
+        function onInputKeyPress(e) {
+            const unicode = e.keyCode ? e.keyCode : e.charCode;
+            if(unicode === 13) {
+                send();
+            }
+        }
+    </script>
+    <body>
+        <textarea id="chatTextArea" readonly="readonly"></textarea>
+        <br/>
+        <label>Enter an integer:</label>
+        <input id="messageTextBox" value="" onkeypress="onInputKeyPress(event);"/>
+        <button id="sendButton" disabled="disabled" onclick="send();">
+            Send
+        </button>
+    </body>
+</html>

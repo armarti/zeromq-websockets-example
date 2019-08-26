@@ -1,0 +1,29 @@
+## from https://gist.github.com/z3t0/2c1c3fad2aeb65f10146fbc74a758d8a
+# - Try to find ZMQ
+# Once done this will define
+# ZeroMQ_FOUND - System has ZMQ
+# ZeroMQ_INCLUDE_DIRS - The ZMQ include directories
+# ZeroMQ_LIBRARIES - The libraries needed to use ZMQ
+# ZeroMQ_DEFINITIONS - Compiler switches required for using ZMQ
+
+set(ZeroMQ_LIBRARY_DIR @ZeroMQ_LIBRARY_DIR@)
+message("ZeroMQ_LIBRARY_DIR=${ZeroMQ_LIBRARY_DIR}")
+
+set(ZeroMQ_LIBRARIES @ZeroMQ_LIBRARIES@)
+set(ZeroMQ_LIBRARY ${ZeroMQ_LIBRARIES})
+message("ZeroMQ_LIBRARIES=${ZeroMQ_LIBRARIES}")
+
+set(ZeroMQ_INCLUDE_DIRS @ZeroMQ_INCLUDE_DIRS@)
+message("ZeroMQ_INCLUDE_DIRS=${ZeroMQ_INCLUDE_DIRS}")
+
+include(FindPackageHandleStandardArgs)
+# handle the QUIETLY and REQUIRED arguments and set ZeroMQ_FOUND to TRUE
+# if all listed variables are TRUE
+find_package_handle_standard_args(
+    ZeroMQ
+    DEFAULT_MSG
+    ZeroMQ_LIBRARY_DIR
+    ZeroMQ_LIBRARIES
+    ZeroMQ_LIBRARY
+    ZeroMQ_INCLUDE_DIRS
+)
