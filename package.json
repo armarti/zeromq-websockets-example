@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "modules/jszmq",
+    "src/js"
+  ],
+  "scripts": {
+    "jszmq:test": "yarn workspace jszmq run test",
+    "jszmq:build": "yarn workspace jszmq tsc"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "version": "2.0.2",
+  "compilerOptions": {
+//    "baseUrl": ".", // This must be specified if "paths" is.
+//    "paths": {
+//      "jszmq": ["node_modules/jszmq"] // This mapping is relative to "baseUrl"
+//    },
+    "rootDir": "./",
+    "lib": [
+      "es5",
+      "es2015.promise",
+      "dom",
+      "es2015"
+    ],
+    "esModuleInterop": true,
+//    "allowJs": true,
+    "jsx": "react",
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types",
+      "jszmq"
+    ],
+    "strict": true,
+//    "rootDirs": [
+//      "./src",
+//      "../jszmq"
+//    ],
+//    "types": [
+//      "@types/**"
+//    ],
+    "outDir": "./dist",
+    "module": "commonjs",
+//    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+//    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  }
+//  ,"include": [
+////    "@msgpack/msgpack",
+////    "node_modules/jszmq"
+//  ]
+  ,"exclude": [
+    "node_modules"
+////    ".cache"
+  ]
+}

@@ -1,0 +1,6 @@
+*
+!.gitignore
+!runConfigurations/*
+!*.iml
+!modules.xml
+!customTargets.xml

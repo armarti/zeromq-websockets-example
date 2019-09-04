@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0074 NEW)
+cmake_policy(SET CMP0022 NEW)
 project(desktop_app_template2)
 
 ### globals ####################################################################
@@ -22,7 +23,10 @@ set(BUILD_STATIC ON CACHE BOOL "" FORCE)
 set(BUILD_SHARED ON CACHE BOOL "" FORCE)
 set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(ZMQ_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-add_subdirectory(libzmq)
+set(WITH_DOC OFF CACHE BOOL "" FORCE)
+set(ENABLE_DRAFTS ON CACHE BOOL "" FORCE)
+set(ZMQ_BUILD_FRAMEWORK OFF CACHE BOOL "" FORCE)
+add_subdirectory(modules/libzmq)
 #get_target_property(ZeroMQ_LIBRARY_DIR libzmq BINARY_DIR)
 #get_target_property(ZeroMQ_LIBRARIES libzmq OUTPUT_NAME)
 #get_target_property(ZeroMQ_INCLUDE_DIRS libzmq INTERFACE_INCLUDE_DIRECTORIES)
@@ -31,7 +35,8 @@ add_subdirectory(libzmq)
 
 ### cppzmq ####################################################################
 set(CPPZMQ_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-add_subdirectory(cppzmq)
+set(ENABLE_DRAFTS ON CACHE BOOL "" FORCE)
+add_subdirectory(modules/cppzmq)
 add_dependencies(cppzmq libzmq)
 add_dependencies(cppzmq-static libzmq-static)
 ###############################################################################
@@ -55,22 +60,21 @@ set(MSGPACK_ENABLE_CXX ON CACHE BOOL "" FORCE)
 set(MSGPACK_DEFAULT_API_VERSION "3" CACHE STRING "" FORCE)
 set(MSGPACK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(MSGPACK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-message("CMAKE_VERSION=${CMAKE_VERSION}")
 # creates targets msgpackc-cxx msgpackc msgpackc-static example
-add_subdirectory(msgpack-c)
+add_subdirectory(modules/msgpack-c)
 ###############################################################################
 
 ### main exe ##################################################################
-add_executable(desktop_app_template2 src/cpp/main.cpp)
-add_dependencies(desktop_app_template2 cppzmq msgpackc msgpackc-cxx)
-target_link_directories(desktop_app_template2 BEFORE PUBLIC ${Boost_LIBRARY_DIRS})
-target_link_libraries(desktop_app_template2
+add_executable(zmq-websockets-example src/cpp/main.cpp)
+add_dependencies(zmq-websockets-example cppzmq msgpackc msgpackc-cxx)
+target_link_directories(zmq-websockets-example BEFORE PUBLIC ${Boost_LIBRARY_DIRS})
+target_link_libraries(zmq-websockets-example
     PUBLIC cppzmq
     PUBLIC libzmq
     PUBLIC ${Boost_LIBRARIES}
     PUBLIC msgpackc
     PUBLIC msgpackc-cxx)
-target_include_directories(desktop_app_template2 BEFORE
+target_include_directories(zmq-websockets-example BEFORE
     PUBLIC cppzmq
     PUBLIC libzmq
     PUBLIC ${Boost_INCLUDE_DIRS}

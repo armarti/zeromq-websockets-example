@@ -1,9 +1,16 @@
-[submodule "cppzmq"]
-	path = cppzmq
+[submodule "modules/cppzmq"]
+	path = modules/cppzmq
 	url = https://github.com/zeromq/cppzmq.git
-[submodule "libzmq"]
-	path = libzmq
+	branch = master
+[submodule "modules/libzmq"]
+	path = modules/libzmq
 	url = https://github.com/zeromq/libzmq.git
-[submodule "msgpack-c"]
-	path = msgpack-c
+	branch = master
+[submodule "modules/msgpack-c"]
+	path = modules/msgpack-c
 	url = https://github.com/msgpack/msgpack-c.git
+	branch = master
+[submodule "modules/jszmq"]
+	path = modules/jszmq
+	url = https://github.com/zeromq/jszmq.git
+	branch = master
