@@ -27,6 +27,11 @@ int main() {
             msgpack::pack(&buf, objMap);
             zmq::message_t outmsg(buf.data(), buf.size());
             zmq::detail::send_result_t res = sock.send(outmsg, zmq::send_flags::dontwait);
+            if(res.has_value()) {
+                std::cout << "Sent " << res.value() << " bytes.\n";
+            } else {
+                std::cerr << "`socket.send` didn't return the number of bytes it sent.\n";
+            }
         }
     }
     return 0;

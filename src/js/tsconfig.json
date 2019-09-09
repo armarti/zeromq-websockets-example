@@ -1,49 +1,31 @@
 {
-  "version": "2.0.2",
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
-//    "baseUrl": ".", // This must be specified if "paths" is.
-//    "paths": {
-//      "jszmq": ["node_modules/jszmq"] // This mapping is relative to "baseUrl"
-//    },
-    "rootDir": "./",
+    "rootDirs": [
+      "./app/renderer",
+      "./app/main",
+      "./misc"
+    ],
+//    "typeRoots": [
+//      "@types",
+//      "jszmq"
+//    ],
     "lib": [
-      "es5",
-      "es2015.promise",
-      "dom",
-      "es2015"
+      "es2018",
+      "dom"
     ],
-    "esModuleInterop": true,
-//    "allowJs": true,
-    "jsx": "react",
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types",
-      "jszmq"
-    ],
-    "strict": true,
-//    "rootDirs": [
-//      "./src",
-//      "../jszmq"
-//    ],
-//    "types": [
-//      "@types/**"
-//    ],
-    "outDir": "./dist",
     "module": "commonjs",
-//    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-//    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true
   }
-//  ,"include": [
-////    "@msgpack/msgpack",
-////    "node_modules/jszmq"
-//  ]
-  ,"exclude": [
-    "node_modules"
-////    ".cache"
-  ]
 }

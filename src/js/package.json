@@ -2,11 +2,20 @@
   "name": "proj",
   "version": "0.0.1",
   "main": "dist/index.html",
+  "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist .cache bin",
-    "build": "yarn run clean && webpack --mode production",
-    "dev": "yarn run clean && webpack --watch --mode development --verbose",
-    "run": "node ./bin/out.js"
+    "package": "yarn run build && electron-builder build",
+    "clean": "rimraf dist .cache bin build",
+    "build": "yarn run clean && webpack --mode production --config webpack.config.ts",
+    "build:development": "yarn run clean && webpack --mode development --config webpack.config.ts",
+    "build:node": "rimraf dist/bin && webpack --mode production --verbose ./scripts/config/nodeConfig.js",
+    "build:web": "rimraf dist/static && webpack --mode production --verbose ./scripts/config/webConfig.js",
+    "build:electron": "rimraf dist/app && electron-webpack",
+    "dev:node": "rimraf dist/bin && webpack --watch --mode development --verbose ./scripts/config/nodeConfig.js",
+    "dev:web": "rimraf dist/static && webpack --watch --mode development --verbose ./scripts/config/webConfig.js",
+    "dev:electron": "rimraf dist/app && electron-webpack dev",
+    "run": "node ./bin/out.js",
+    "postinstall": "node ./scripts/postinstall.js"
   },
   "dependencies": {
     "@msgpack/msgpack": "^1.9.0",
@@ -16,24 +25,46 @@
     "typescript": "^3.6.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@types/core-js": "^2.5.2",
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/html-webpack-plugin": "^3.2.1",
+    "@types/node": "^12.7.4",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-router-dom": "^4.3.5",
+    "@types/webpack-merge": "^4.1.5",
     "babel-loader": "^8.0.6",
     "core-js": "^3.2.1",
+    "electron": "6.0.7",
+    "electron-builder": "^21.2.0",
+    "electron-devtools-installer": "^2.2.4",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "parcel-bundler": "^1.12.3",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
     "rimraf": "^3.0.0",
+    "source-map-support": "^0.5.13",
     "ts-loader": "^6.0.4",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.6.2",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
     "webpack-merge": "^4.2.2"
   },
-  "peerDependencies": {
-    "@babel/core": "^7.5.5"
+  "optionalDependencies": {
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
   },
+  "peerDependencies": {},
   "babel": {
     "presets": [
       [
@@ -45,10 +76,54 @@
             "proposals": true
           }
         }
+      ],
+      [
+        "@babel/preset-react",
+        {
+          "pragma": "React.createElement",
+          "pragmaFrag": "React.Fragment",
+          "throwIfNamespace": true,
+          "useBuiltIns": true
+        }
       ]
     ]
   },
   "browserslist": [
-    "chrome>=70"
-  ]
+    "chrome 76"
+  ],
+  "build": {
+    "files": [
+      "./build/app/*",
+      "./build/app/**/*",
+      "./build/app/**/**/*",
+      "./build/app/**/**/**/*",
+      "./build/app/**/**/**/**/*",
+      "./build/app/**/**/**/**/**/*"
+    ],
+    "directories": {
+      "output": "./dist/app/${productName}-${version}-${os}_${arch}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage"
+        }
+      ],
+      "category": "Balls"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "msi"
+        }
+      ]
+    }
+  }
 }

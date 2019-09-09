@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // "outDir": "../../build/app/renderer",
+    "declarationDir": "../../build/app/renderer",
+    "baseUrl": "."
+  }
+}

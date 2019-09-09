@@ -1,0 +1,5 @@
+const rootReducer = {};
+
+export {
+    rootReducer
+};

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+        <title><%= title %></title>
+        <% files.css.forEach(function (src) { %>
+            <link rel="stylesheet" href="<%= src %>">
+        <% }) %>
+        <% files.js.forEach(function (src) { %>
+            <% if(src.indexOf('head') !== -1) { %>
+                <script type="application/javascript" src="<%= src %>"></script>
+            <% } %>
+        <% }) %>
+    </head>
+    <body>
+        <div id="main"></div>
+    </body>
+    <% files.js.forEach(function (src) { %>
+        <% if(src.indexOf('head') === -1) { %>
+            <script type="application/javascript" src="<%= src %>"></script>
+        <% } %>
+    <% }); %>
+</html>

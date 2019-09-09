@@ -1,0 +1,5 @@
+{
+  "version": "2.0.2",
+  //"extends": "./../node_modules/electron-webpack/tsconfig-base.json",
+  "extends": "../tsconfig.json"
+}

@@ -1,7 +1,7 @@
 import { Dealer, Buffer } from 'jszmq';
-import { encode, decode } from "@msgpack/msgpack";
+import { encode, decode } from '@msgpack/msgpack';
 
-interface ProjMessage {
+interface IProjMessage {
     message: number;
 }
 
@@ -10,7 +10,7 @@ const dealer = new Dealer();
 dealer.connect(ENDPOINT_URL);
 
 dealer.on('message', function(msg){
-    const decodedMsg = <ProjMessage>decode(msg);
+    const decodedMsg = <IProjMessage>decode(msg);
     console.log('Received: ', decodedMsg);
     setTimeout(() => {
         decodedMsg.message++;
